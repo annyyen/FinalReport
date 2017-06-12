@@ -1,0 +1,139 @@
+---
+title: ""
+output: github_document
+---
+## 組員
+閻俞蓉
+
+## 分析議題背景
+台灣有非常多所大學，需要透過考試或推甄進入就讀。國立大學和私立大學的學生數和老師數一定不同，各個科系的學生人數也不同。
+
+## 分析動機
+身為私立大學的學生，想要分析研究長庚大學與其他國立大學的學生人數有何差異，也探討各個科系的男女生比例和師生比。
+
+## 使用資料
+資料來源:政府資料開放平台
+資料類型：CSV
+主要欄位:學校代碼、學校名稱、日間∕進修別、等級別、總計、男生計、女生計、一年級男生、一年級女生、二年級男生、二年級女生、三年級男生、三年級女生、四年級男生、四年級女生、五年級男生、五年級女生、六年級男生、六年級女生、七年級男生、七年級女生、延修生男生、延修生女生、縣市名稱、體系別
+
+1.大專院校校別學生數
+2.大專院校校別專任教師數
+3.大專院校各校科系別學生數
+4.大專院校各科系所學生數
+
+```{r}
+library(readr)
+# 大專院校校別學生數
+X105_student <- read_csv("C:/Users/user/Desktop/105_student.csv")
+knitr::kable(head(X105_student))
+
+# 大專院校校別專任教師數
+X105_teacher <- read_csv("C:/Users/user/Desktop/105_teacher.csv")
+knitr::kable(head(X105_teacher))
+
+# 大專院校各校科系別學生數
+X105_students <- read_csv("C:/Users/user/Desktop/105_students.csv")
+knitr::kable(head(X105_students))
+
+# 大專院校各科系所學生數
+X105_studentsb <- read_csv("C:/Users/user/Desktop/105_studentsb.csv")
+knitr::kable(head(X105_studentsb))
+```
+
+
+## 資料處理與清洗
+1.四張表都先篩選出國立大學和長庚大學的學士生資料
+
+```{r}
+library(dplyr)
+
+#1
+a1 <- X105_student[grep("國立|長庚大學", X105_student$'學校名稱'), ]
+a2 <- a1[-grep("科技大學|學院|專科學校", a1$'學校名稱'), ]
+student <- a2[grep("B 學士", a2$'等級別'), ]
+knitr::kable(head(student))
+
+b1 <- X105_teacher[grep("國立|長庚大學", X105_teacher$'學校名稱'), ]
+teacher <- b1[-grep("科技大學|學院|專科學校", b1$'學校名稱'), ]
+knitr::kable(head(teacher))
+
+c1 <- X105_students[grep("國立|長庚大學", X105_students$'學校名稱'), ]
+c2 <- c1[-grep("科技大學|學院|專科學校", c1$'學校名稱'), ]
+students <- c2[grep("B 學士", c2$'等級別'), ]
+knitr::kable(head(students))
+
+studentsb <- X105_studentsb[grep("B 學士", X105_studentsb$'等級別'), ]
+knitr::kable(head(studentsb))
+
+```
+
+## 探索式資料分析
+1.從大專院校校別學生數的表(student)，計算每間大學有幾個學生
+2.從大專院校各校科系別學生數的表(students)，計算每間大學有幾個科系
+3.從大專院校各科系所學生數的表(studentsb)，計算各科系男生女生人數
+4.大專院校校別專任教師數的表(teacher)，計算每間大學有幾個教授
+5.圖表
+
+```{r}
+library(data.table)
+library(ggplot2)
+
+#1每間大學有幾個科系
+#depnum <- table(students$學校名稱)
+
+departmentnum <- group_by(students,'學校代碼') %>%
+  summarise(ndepartment=n()) %>%
+  arrange(desc(ndepartment))
+departmentnumDF <- data.frame(departmentnum)
+knitr::kable(departmentnumDF)
+
+
+
+
+
+
+
+for i=1 in 46{
+  a <- sum(student[i,5:18])
+  }
+
+
+
+
+
+
+
+
+#2
+departmentsum <- group_by(students,'學校名稱') %>%
+  summarise(ndepartment=n())%>%
+  arrange(desc(ndepartment))
+knitr::kable(departmentsum)
+
+#3
+
+
+#4
+
+#5
+
+library(ggplot2)
+library(datasets) 
+
+#qplot('學校名稱', '一年級男生', data = student)
+ggplot()+geom_bar(data=student,
+                  aes(x='學校名稱',y='一年級男生'),
+                  stat = "identity") 
+
+```
+
+## 期末專題分析規劃
+針對國立大學(46所)和長庚大學，進行以下分析:
+
+1.哪一所大學人數最多(47所)
+2.哪一系人數最多(3697個科系)(barchart)
+3.各系所男女比例
+4.學生人數與老師人數比例
+5.以科系別來看師生比(不同科系的師生比，不分學校，探討哪個系老師最多)
+
+
