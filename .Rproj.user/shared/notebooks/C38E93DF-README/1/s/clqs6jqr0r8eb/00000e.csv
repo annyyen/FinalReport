@@ -1,0 +1,11 @@
+"0","d1 <- X105_studentsb[grep(""B 學士"", X105_studentsb$'等級別'), ]
+"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"
+"0","studentsb <- d1[grep(""D 日"",d1$'日間∕進修別'), ]"
+"0","knitr::kable(head(studentsb))"

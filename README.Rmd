@@ -1,5 +1,5 @@
 ---
-title: ""
+title: "探討長庚大學和國立大學的學生人數"
 output: github_document
 ---
 ## 組員
@@ -47,14 +47,15 @@ knitr::kable(head(X105_studentsb))
 ```{r}
 library(dplyr)
 
-#1
+#篩選出國立大學和長庚大學的學士生資料
 a1 <- X105_student[grep("國立|長庚大學", X105_student$'學校名稱'), ]
 a2 <- a1[-grep("科技大學|學院|專科學校", a1$'學校名稱'), ]
 student <- a2[grep("B 學士", a2$'等級別'), ]
 knitr::kable(head(student))
 
 b1 <- X105_teacher[grep("國立|長庚大學", X105_teacher$'學校名稱'), ]
-teacher <- b1[-grep("科技大學|學院|專科學校", b1$'學校名稱'), ]
+b2 <- b1[-grep("科技大學|學院|專科學校", b1$'學校名稱'), ]
+teacher <- b2[-grep("修",b2$'日間∕進修別'), ]
 knitr::kable(head(teacher))
 
 c1 <- X105_students[grep("國立|長庚大學", X105_students$'學校名稱'), ]
@@ -62,78 +63,149 @@ c2 <- c1[-grep("科技大學|學院|專科學校", c1$'學校名稱'), ]
 students <- c2[grep("B 學士", c2$'等級別'), ]
 knitr::kable(head(students))
 
-studentsb <- X105_studentsb[grep("B 學士", X105_studentsb$'等級別'), ]
+d1 <- X105_studentsb[grep("B 學士", X105_studentsb$'等級別'), ]
+studentsb <- d1[grep("D 日",d1$'日間∕進修別'), ]
 knitr::kable(head(studentsb))
 
 ```
 
 ## 探索式資料分析
-1.從大專院校校別學生數的表(student)，計算每間大學有幾個學生
-2.從大專院校各校科系別學生數的表(students)，計算每間大學有幾個科系
-3.從大專院校各科系所學生數的表(studentsb)，計算各科系男生女生人數
-4.大專院校校別專任教師數的表(teacher)，計算每間大學有幾個教授
-5.圖表
 
 ```{r}
+
+#新增總學生人數欄位
+s1 <- data.frame(sum(student[1,5:18]))
+s2 <- data.frame(sum(student[2,5:18]))
+s3 <- data.frame(sum(student[3,5:18]))
+s4 <- data.frame(sum(student[4,5:18]))
+s5 <- data.frame(sum(student[5,5:18]))
+s6 <- data.frame(sum(student[6,5:18]))
+s7 <- data.frame(sum(student[7,5:18]))
+s8 <- data.frame(sum(student[8,5:18]))
+s9 <- data.frame(sum(student[9,5:18]))
+s10 <- data.frame(sum(student[10,5:18]))
+s11 <- data.frame(sum(student[11,5:18]))
+s12 <- data.frame(sum(student[12,5:18]))
+s13 <- data.frame(sum(student[13,5:18]))
+s14 <- data.frame(sum(student[14,5:18]))
+s15 <- data.frame(sum(student[15,5:18]))
+s16 <- data.frame(sum(student[16,5:18]))
+s17 <- data.frame(sum(student[17,5:18]))
+s18 <- data.frame(sum(student[18,5:18]))
+s19 <- data.frame(sum(student[19,5:18]))
+s20 <- data.frame(sum(student[20,5:18]))
+s21 <- data.frame(sum(student[21,5:18]))
+s22 <- data.frame(sum(student[22,5:18]))
+s23 <- data.frame(sum(student[23,5:18]))
+s24 <- data.frame(sum(student[24,5:18]))
+s25 <- data.frame(sum(student[25,5:18]))
+s26 <- data.frame(sum(student[26,5:18]))
+s27 <- data.frame(sum(student[27,5:18]))
+s28 <- data.frame(sum(student[28,5:18]))
+s29 <- data.frame(sum(student[29,5:18]))
+s30 <- data.frame(sum(student[30,5:18]))
+s31 <- data.frame(sum(student[31,5:18]))
+s32 <- data.frame(sum(student[32,5:18]))
+s33 <- data.frame(sum(student[33,5:18]))
+s34 <- data.frame(sum(student[34,5:18]))
+s35 <- data.frame(sum(student[35,5:18]))
+s36 <- data.frame(sum(student[36,5:18]))
+s37 <- data.frame(sum(student[37,5:18]))
+s38 <- data.frame(sum(student[38,5:18]))
+s39 <- data.frame(sum(student[39,5:18]))
+s40 <- data.frame(sum(student[40,5:18]))
+s41 <- data.frame(sum(student[41,5:18]))
+s42 <- data.frame(sum(student[42,5:18]))
+s43 <- data.frame(sum(student[43,5:18]))
+s44 <- data.frame(sum(student[44,5:18]))
+s45 <- data.frame(sum(student[45,5:18]))
+s46 <- data.frame(sum(student[46,5:18]))
+student$stotalnum <- as.numeric(c(s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13,s14,s15,s16,s17,s18,s19,s20,s21,s22,s23,s24,s25,s26,s27,s28,s29,s30,s31,s32,s33,s34,s35,s36,s37,s38,s39,s40,s41,s42,s43,s44,s45,s46))
+
+#新增老師人數欄位
+t1 <- data.frame(sum(teacher[1,4:19]))
+t2 <- data.frame(sum(teacher[2,4:19]))
+t3 <- data.frame(sum(teacher[3,4:19]))
+t4 <- data.frame(sum(teacher[4,4:19]))
+t5 <- data.frame(sum(teacher[5,4:19]))
+t6 <- data.frame(sum(teacher[6,4:19]))
+t7 <- data.frame(sum(teacher[7,4:19]))
+t8 <- data.frame(sum(teacher[8,4:19]))
+t9 <- data.frame(sum(teacher[9,4:19]))
+t10 <- data.frame(sum(teacher[10,4:19]))
+t11 <- data.frame(sum(teacher[11,4:19]))
+t12 <- data.frame(sum(teacher[12,4:19]))
+t13 <- data.frame(sum(teacher[13,4:19]))
+t14 <- data.frame(sum(teacher[14,4:19]))
+t15 <- data.frame(sum(teacher[15,4:19]))
+t16 <- data.frame(sum(teacher[16,4:19]))
+t17 <- data.frame(sum(teacher[17,4:19]))
+t18 <- data.frame(sum(teacher[18,4:19]))
+t19 <- data.frame(sum(teacher[19,4:19]))
+t20 <- data.frame(sum(teacher[20,4:19]))
+t21 <- data.frame(sum(teacher[21,4:19]))
+t22 <- data.frame(sum(teacher[22,4:19]))
+t23 <- data.frame(sum(teacher[23,4:19]))
+t24 <- data.frame(sum(teacher[24,4:19]))
+t25 <- data.frame(sum(teacher[25,4:19]))
+t26 <- data.frame(sum(teacher[26,4:19]))
+t27 <- data.frame(sum(teacher[27,4:19]))
+t28 <- data.frame(sum(teacher[28,4:19]))
+t29 <- data.frame(sum(teacher[29,4:19]))
+t30 <- data.frame(sum(teacher[30,4:19]))
+t31 <- data.frame(sum(teacher[31,4:19]))
+t32 <- data.frame(sum(teacher[32,4:19]))
+t33 <- data.frame(sum(teacher[33,4:19]))
+t34 <- data.frame(sum(teacher[34,4:19]))
+t35 <- data.frame(sum(teacher[35,4:19]))
+t36 <- data.frame(sum(teacher[36,4:19]))
+t37 <- data.frame(sum(teacher[37,4:19]))
+teacher$ttotalnum <- as.numeric(c(t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11,t12,t13,t14,t15,t16,t17,t18,t19,t20,t21,t22,t23,t24,t25,t26,t27,t28,t29,t30,t31,t32,t33,t34,t35,t36,t37))
+
+head(sort(student$stotalnum,decreasing = T)) 
+
+
+
+#每間大學有幾個科系
+depnum <- data.frame(table(students$學校名稱))
+knitr::kable(depnum)
+
+
+
+#電機系性別比
+cguele <- 
+#化材系性別比
+cguchem <- 
+#醫學系性別比
+cgumed <- 
+#資管系性別比
+cguim <- studentsb[502,9]/studentsb[502,10]*100
+#醫管系性別比
+cguhcm <- 
+#護理系性別比
+cgunurse <- 
+
+
+
+#
 library(data.table)
-library(ggplot2)
-
-#1每間大學有幾個科系
-#depnum <- table(students$學校名稱)
-
-departmentnum <- group_by(students,'學校代碼') %>%
-  summarise(ndepartment=n()) %>%
-  arrange(desc(ndepartment))
-departmentnumDF <- data.frame(departmentnum)
-knitr::kable(departmentnumDF)
-
-
-
-
-
-
-
-for i=1 in 46{
-  a <- sum(student[i,5:18])
-  }
-
-
-
-
-
-
-
-
-#2
-departmentsum <- group_by(students,'學校名稱') %>%
-  summarise(ndepartment=n())%>%
-  arrange(desc(ndepartment))
-knitr::kable(departmentsum)
-
-#3
-
-
-#4
-
-#5
-
 library(ggplot2)
 library(datasets) 
 
 #qplot('學校名稱', '一年級男生', data = student)
 ggplot()+geom_bar(data=student,
-                  aes(x='學校名稱',y='一年級男生'),
+                  aes(x='學校名稱',y=stotalnum),
                   stat = "identity") 
 
 ```
 
-## 期末專題分析規劃
-針對國立大學(46所)和長庚大學，進行以下分析:
-
-1.哪一所大學人數最多(47所)
-2.哪一系人數最多(3697個科系)(barchart)
-3.各系所男女比例
-4.學生人數與老師人數比例
-5.以科系別來看師生比(不同科系的師生比，不分學校，探討哪個系老師最多)
+## 假設
+1.長庚大學學生人數應該偏少
+2.長庚科系數應該偏少
+3.學校學生人數越多，老師也會越多
 
 
+## 分析結果
+1.長庚大學學生人數是第16多，在前35%。假設錯誤
+2.
+3.長庚大學學生人數排第16，但是老師人數竟然在十名內，師生比高，可能是私立大學的原因。

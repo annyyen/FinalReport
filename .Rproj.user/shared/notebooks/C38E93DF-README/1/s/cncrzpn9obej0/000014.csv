@@ -1,0 +1,23 @@
+"0","X105_student <- read_csv(""C:/Users/user/Desktop/105_student.csv"")
+"
+"2","Parsed with column specification:
+cols(
+  .default = col_integer(),
+  學校代碼 = col_character(),
+  學校名稱 = col_character(),
+  `日間∕進修別` = col_character(),
+  等級別 = col_character(),
+  縣市名稱 = col_character(),
+  體系別 = col_character()
+)
+"
+"2","See spec(...) for full column specifications.
+"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"
+"0","knitr::kable(head(X105_student))"
