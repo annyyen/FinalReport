@@ -230,7 +230,8 @@ knitr::kable(head(students))
 | 0001     | 國立政治大學 | 220324   | 韓國語文學系   | D 日        | B 學士 |      4     |     29     |      6     |     29     |      3     |     29     |      4     |     30     |      0     |      0     |      0     |      0     |      0     |      0     |      4     |     23     | 30 臺北市 | 1 一般 |
 
 ``` r
-studentsb <- X105_studentsb[grep("B 學士", X105_studentsb$'等級別'), ]
+d1 <- X105_studentsb[grep("B 學士", X105_studentsb$'等級別'), ]
+studentsb <- d1[grep("D 日",d1$'日間∕進修別'), ]
 knitr::kable(head(studentsb))
 ```
 
@@ -342,36 +343,6 @@ head(sort(student$stotalnum,decreasing = T))
     ## [1] 15193 10880  8929  7788  7641  7551
 
 ``` r
-# departmentsum <- group_by(students,'學校名稱') %>%
-#   summarise(ndepartment=n())%>%
-#   arrange(desc(ndepartment))
-# knitr::kable(departmentsum)
-
-#3
-library(data.table)
-```
-
-    ## -------------------------------------------------------------------------
-
-    ## data.table + dplyr code now lives in dtplyr.
-    ## Please library(dtplyr)!
-
-    ## -------------------------------------------------------------------------
-
-    ## 
-    ## Attaching package: 'data.table'
-
-    ## The following objects are masked from 'package:dplyr':
-    ## 
-    ##     between, first, last
-
-``` r
-library(ggplot2)
-```
-
-    ## Warning: package 'ggplot2' was built under R version 3.3.3
-
-``` r
 #每間大學有幾個科系
 depnum <- data.frame(table(students$學校名稱))
 knitr::kable(depnum)
@@ -415,20 +386,46 @@ knitr::kable(depnum)
 | 國立體育大學                               |     7|
 
 ``` r
-# departmentnum <- group_by(students,'學校代碼') %>%
-#   summarise(ndepartment=n()) %>%
-#   arrange(desc(ndepartment))
-# departmentnumDF <- data.frame(departmentnum)
-# knitr::kable(departmentnumDF)
+#電機系性別比
+cguele <- 
+#化材系性別比
+cguchem <- 
+#醫學系性別比
+cgumed <- 
+#資管系性別比
+cguim <- studentsb[502,9]/studentsb[502,10]*100
+#醫管系性別比
+cguhcm <- 
+#護理系性別比
+cgunurse <- 
 
 
 
+#
+library(data.table)
+```
 
-#4
+    ## -------------------------------------------------------------------------
 
-#5
+    ## data.table + dplyr code now lives in dtplyr.
+    ## Please library(dtplyr)!
 
+    ## -------------------------------------------------------------------------
+
+    ## 
+    ## Attaching package: 'data.table'
+
+    ## The following objects are masked from 'package:dplyr':
+    ## 
+    ##     between, first, last
+
+``` r
 library(ggplot2)
+```
+
+    ## Warning: package 'ggplot2' was built under R version 3.3.3
+
+``` r
 library(datasets) 
 
 #qplot('學校名稱', '一年級男生', data = student)
