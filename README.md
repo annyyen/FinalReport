@@ -1,4 +1,4 @@
-探討長庚大學和國立大學的學生人數
+探討長庚大學和國立大學的不同
 ================
 
 組員
@@ -9,7 +9,7 @@
 分析議題背景
 ------------
 
-台灣有非常多所大學，需要透過考試或推甄進入就讀。國立大學和私立大學的學生數和老師數一定不同，各個科系的學生人數也不同。
+台灣高中生透過推甄、學測、或指考進入大學。國立大學和私立大學的學生數和老師數不同，各個科系的學生人數也不同，每個科系也有不同的男女比例。
 
 分析動機
 --------
@@ -387,20 +387,28 @@ knitr::kable(depnum)
 
 ``` r
 #電機系性別比
-cguele <- 
+cguele <- studentsb[535,9]/studentsb[535,10]*100
 #化材系性別比
-cguchem <- 
+cguchem <- studentsb[608,9]/studentsb[608,10]*100
 #醫學系性別比
-cgumed <- 
+cgumed <- studentsb[725,9]/studentsb[725,10]*100
 #資管系性別比
 cguim <- studentsb[502,9]/studentsb[502,10]*100
 #醫管系性別比
-cguhcm <- 
+cguhcm <- studentsb[385,9]/studentsb[385,10]*100
 #護理系性別比
-cgunurse <- 
+cgunurse <- studentsb[753,9]/studentsb[753,10]*100
 
+ratio <- data.frame(rbind(cguele,cguchem,cgumed,cguim,cguhcm,cgunurse))
+knitr::kable(ratio)
+```
 
+三年級男生
+----------
 
+1419.29825 321.15385 180.76010 200.78545 27.72109 22.41874
+
+``` r
 #
 library(data.table)
 ```
@@ -428,20 +436,27 @@ library(ggplot2)
 ``` r
 library(datasets) 
 
-#qplot('學校名稱', '一年級男生', data = student)
-ggplot()+geom_bar(data=student,
-                  aes(x='學校名稱',y=stotalnum),
-                  stat = "identity") 
+#科系圖表
+hist(depnum$Freq,main="Histogram of 科系",xlab="科系數",ylab="學校數")
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
+``` r
+#學生人數圖表
+ggplot()+geom_bar(data=student,
+                  aes(x=學校名稱,y=stotalnum),
+                  stat = "identity") 
+```
+
+![](README_files/figure-markdown_github/unnamed-chunk-3-2.png)
+
 假設
 ----
 
-1.長庚大學學生人數應該偏少 2.長庚科系數應該偏少 3.學校學生人數越多，老師也會越多
+1.長庚大學學生人數應該偏少 2.長庚科系數應該偏少 3.學校學生人數越多，老師也會越多 4.科系男女比例推測: 電機系&gt;化材系&gt;醫學系&gt;資管系&gt;醫管系&gt;護理系
 
 分析結果
 --------
 
-1.長庚大學學生人數是第16多，在前35%。假設錯誤 2. 3.長庚大學學生人數排第16，但是老師人數竟然在十名內，師生比高，可能是私立大學的原因。
+1.長庚大學學生人數是第16多，在前35%。假設錯誤 2.長庚大學有21個科系，科系數是第24多，比平均還少。 3.長庚大學學生人數排第16，但是老師人數竟然在十名內，師生比高，可能是私立大學的原因。 4.科系男女比例結果: 電機系&gt;化材系&gt;"資管系&gt;醫學系"&gt;醫管系&gt;護理系

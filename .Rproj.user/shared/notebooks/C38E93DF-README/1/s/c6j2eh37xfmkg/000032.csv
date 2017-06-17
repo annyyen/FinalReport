@@ -1,4 +1,6 @@
-"0","cguim <- studentsb[502,9]/studentsb[502,10]*100
+"0","ggplot()+geom_bar(data=student,
+                  aes(x=學校名稱,y=stotalnum),
+                  stat = ""identity"") 
 "
 "2","Warning message:
 "
